@@ -1,9 +1,12 @@
 package com.majorproj.agrorent.entities;
 
+
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -28,7 +31,7 @@ import lombok.ToString;
 @Setter
 @Table(name="farmers")
 @ToString(callSuper = true,exclude = {"equipmentList","bookings"})
-public class Farmer extends BaseEntity{
+public class Farmer extends BaseEntity implements UserDetails{
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private Long id;
@@ -52,4 +55,20 @@ public class Farmer extends BaseEntity{
 
 	 @OneToMany(mappedBy = "farmer",cascade = CascadeType.ALL, orphanRemoval = true)
 	 private List<Booking> bookings;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		return List.of(new SimpleGrantedAuthority(this.role.name()));
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+		return this.active;
+	}
 }
