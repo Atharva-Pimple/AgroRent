@@ -6,4 +6,5 @@ public interface ImageService {
 
 	String uploadImage(MultipartFile image, String fileName);
 	String getUrlFromPublicId(String publicId);
+	void deleteImage(String publicId);
 }

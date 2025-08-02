@@ -53,5 +53,15 @@ public class ImageServiceImpl implements ImageService{
 				)
 				.generate(publicId);
 	}
+	
+	@Override
+	public void deleteImage(String publicId) {
+		try {
+	        cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+	    } catch (IOException e) {
+	        throw new ApiException("Failed to delete image from cloud");
+	    }
+		
+	}
 
 }

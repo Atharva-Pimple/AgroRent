@@ -71,4 +71,24 @@ public class Farmer extends BaseEntity implements UserDetails{
 	public boolean isEnabled() {
 		return this.active;
 	}
+	
+	public void addEquipment(Equipment e) {
+		this.equipmentList.add(e);
+		e.setOwner(this);
+	}
+	
+	public void removeEquipment(Equipment e) {
+		this.equipmentList.remove(e);
+		e.setOwner(null);
+	}
+	
+	public void addBooking(Booking b) {
+		this.bookings.add(b);
+		b.setFarmer(this);
+	}
+	
+	public void removeBooking(Booking b) {
+		this.bookings.remove(b);
+		b.setFarmer(null);
+	}
 }

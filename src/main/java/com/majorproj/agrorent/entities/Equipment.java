@@ -38,4 +38,14 @@ public class Equipment extends BaseEntity{
 
     @OneToMany(mappedBy = "equipment")
     private List<Booking> bookings;
+    
+    public void addBooking(Booking b) {
+		this.bookings.add(b);
+		b.setEquipment(this);
+	}
+	
+	public void removeBooking(Booking b) {
+		this.bookings.remove(b);
+		b.setEquipment(null);
+	}
 }

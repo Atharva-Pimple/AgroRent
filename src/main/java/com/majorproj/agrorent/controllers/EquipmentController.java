@@ -4,12 +4,17 @@ package com.majorproj.agrorent.controllers;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.majorproj.agrorent.dto.EquipmentDto;
+import com.majorproj.agrorent.dto.EquipmentUpdateDto;
 import com.majorproj.agrorent.services.EquipmentService;
 
 import jakarta.validation.Valid;
@@ -28,4 +33,27 @@ public class EquipmentController {
 		
 		return ResponseEntity.ok(equipmentService.addEquipment(dto,email));
 	}
+	
+	@GetMapping
+	public ResponseEntity<?> getAllEquiments(){
+		return ResponseEntity.ok(equipmentService.getAllEquipments());
+	}
+	
+	@PutMapping("/{equipmentId}")
+	public ResponseEntity<?> updateEquipment(@PathVariable Long equipmentId, @Valid @ModelAttribute EquipmentUpdateDto dto){
+		return ResponseEntity.ok(equipmentService.updateEquipment(equipmentId, dto));
+		
+	}
+	
+	@DeleteMapping("/{equipmentId}")
+	public ResponseEntity<?> deleteEquipment(@PathVariable Long equipmentId){
+		return ResponseEntity.ok(equipmentService.deleteEquipment(equipmentId));
+	}
+	
+	@GetMapping("/{equipmentId}")
+	public ResponseEntity<?> getEquipment(@PathVariable Long equipmentId){
+		return ResponseEntity.ok(equipmentService.getEquipmentById(equipmentId));
+	}
+	
+	
 }
