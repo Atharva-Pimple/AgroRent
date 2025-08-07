@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 
 @Configuration
 public class AppConfiguration {
@@ -22,6 +24,11 @@ public class AppConfiguration {
 	@Value("${cloudinary.api.secret}")
 	private String apiSecret;
 	
+	@Value("${razorpay.api.key}")
+	private String razorapiKey;
+	
+	@Value("${razorpay.api.secret}")
+	private String razorapiSecret;
 	
 	
 	@Bean 
@@ -51,5 +58,12 @@ public class AppConfiguration {
 
 		);
 	}
+	
+
+	@Bean
+    public RazorpayClient razorpayClient() throws RazorpayException {
+        return new RazorpayClient(razorapiKey, razorapiSecret);
+    }
+	
 	
 }
