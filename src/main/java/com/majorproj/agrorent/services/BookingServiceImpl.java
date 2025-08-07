@@ -92,7 +92,7 @@ public class BookingServiceImpl implements BookingService {
                         b.getEndDate(),
                         b.getStatus(),
                         b.getTotalAmount(),
-                        b.getPayment() != null,
+                        isPaid(b),
                         b.getFarmer().getFirstName()+" "+b.getFarmer().getLastName(),
                         b.getEquipment().getName()
                 )
@@ -110,7 +110,7 @@ public class BookingServiceImpl implements BookingService {
                         b.getEndDate(),
                         b.getStatus(),
                         b.getTotalAmount(),
-                        b.getPayment() != null,
+                        isPaid(b),
                         b.getEquipment().getId(),
                         b.getEquipment().getName()
                 )
@@ -118,6 +118,12 @@ public class BookingServiceImpl implements BookingService {
                 .collect(Collectors.toList());
 		
 		
+	}
+	
+	private boolean isPaid(Booking b) {
+	    return b.getPayment() != null &&
+	           b.getPayment().getPaymentId() != null &&
+	           !b.getPayment().getPaymentId().isBlank();
 	}
 	
 	

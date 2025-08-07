@@ -147,6 +147,13 @@
 		    <artifactId>spring-boot-starter-mail</artifactId>
 		    <version>3.5.3</version>
 		</dependency>
+		
+		<!--Open Pdf to generate pdf-->
+		<dependency>
+		    <groupId>com.github.librepdf</groupId>
+		    <artifactId>openpdf</artifactId>
+		    <version>1.3.30</version>
+		</dependency>
 	</dependencies>
 
 	<build>
