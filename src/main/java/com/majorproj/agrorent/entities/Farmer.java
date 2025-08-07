@@ -1,6 +1,5 @@
 package com.majorproj.agrorent.entities;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -49,6 +48,14 @@ public class Farmer extends BaseEntity implements UserDetails{
 	 @Enumerated(EnumType.STRING)
 	 private Role role; // "ADMIN" or "FARMER" 
 	 private boolean active = true;
+	 
+	// Razorpay identifiers
+	 @Column(name = "razorpay_contact_id")
+	 private String razorpayContactId;
+
+	 @Column(name = "razorpay_fund_account_id")
+	 private String razorpayFundAccountId;
+
 
 	 @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL, orphanRemoval = true)
 	 private List<Equipment> equipmentList;

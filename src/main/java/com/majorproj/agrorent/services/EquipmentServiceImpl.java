@@ -98,5 +98,12 @@ public class EquipmentServiceImpl implements EquipmentService {
 		Equipment equipment=equipmentDao.findById(equipmentId).orElseThrow(()->new ApiException("Invalid Equipment Id"));
 		return mapper.map(equipment, EquipmentRespDto.class);
 	}
+
+
+	@Override
+	public List<EquipmentRespDto> getUsersEquipment(String email) {
+		
+		return equipmentDao.findOwnerEquipments(email);
+	}
 	
 }

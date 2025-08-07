@@ -1,7 +1,5 @@
 package com.majorproj.agrorent.services;
 
-import java.util.List;
-
 import com.majorproj.agrorent.dto.ApiResponse;
 import com.majorproj.agrorent.dto.EquipmentDto;
 import com.majorproj.agrorent.dto.EquipmentRespDto;
@@ -9,6 +7,7 @@ import com.majorproj.agrorent.dto.EquipmentUpdateDto;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
 
 public interface EquipmentService {
 
@@ -22,4 +21,7 @@ public interface EquipmentService {
 
 	EquipmentRespDto getEquipmentById(Long equipmentId);
 
+	List<EquipmentRespDto> getUsersEquipment(String email);
+	
+ 
 }
