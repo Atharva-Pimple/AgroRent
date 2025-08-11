@@ -1,7 +1,9 @@
 package com.majorproj.agrorent.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.security.sasl.AuthenticationException;
 
@@ -14,6 +16,7 @@ import com.majorproj.agrorent.customeExceeption.ApiException;
 import com.majorproj.agrorent.dao.BookingDao;
 import com.majorproj.agrorent.dao.PaymentDao;
 import com.majorproj.agrorent.dto.ApiResponse;
+import com.majorproj.agrorent.dto.PaymentDetailsDto;
 import com.majorproj.agrorent.dto.PaymentRespDto;
 import com.majorproj.agrorent.dto.PaymentVerificationRequestDto;
 import com.majorproj.agrorent.entities.Booking;
@@ -130,6 +133,22 @@ public class PaymentServiceImpl implements PaymentService {
 			log.error(e.getMessage());
 			throw new ApiException("Payment verification failed!!");
 		}
+	}
+
+	@Override
+	public List<PaymentDetailsDto> myEquipmentPayments(String email) {
+		List<Payment> payments=paymentDao.findByBookingEquipmentOwnerEmail(email);
+		
+		return payments.stream()
+				.map(p-> new PaymentDetailsDto(
+							p.getBooking().getId(),
+							p.getBooking().getFarmer().getFirstName()+" "+p.getBooking().getFarmer().getLastName(),
+							p.getBooking().getEquipment().getName(),
+							p.getAmount(),
+							p.getPaymentId(),
+							p.getOrderId()
+						))
+				.collect(Collectors.toList());
 	}
 	
 	

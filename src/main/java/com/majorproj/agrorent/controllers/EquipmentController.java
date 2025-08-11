@@ -4,6 +4,7 @@ package com.majorproj.agrorent.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +37,9 @@ public class EquipmentController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> getAllEquiments(){
-		return ResponseEntity.ok(equipmentService.getAllEquipments());
+	public ResponseEntity<?> getAllEquiments(Authentication authentication){
+		String email=authentication.getName();
+		return ResponseEntity.ok(equipmentService.getAllEquipments(email));
 	}
 	
 	@PutMapping("/{equipmentId}")
@@ -47,6 +49,7 @@ public class EquipmentController {
 	}
 	
 	@DeleteMapping("/{equipmentId}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteEquipment(@PathVariable Long equipmentId){
 		return ResponseEntity.ok(equipmentService.deleteEquipment(equipmentId));
 	}
@@ -60,6 +63,12 @@ public class EquipmentController {
 	public ResponseEntity<?> getUserEquipments(Authentication authentication){
 		String email=authentication.getName();
 		return ResponseEntity.ok(equipmentService.getUsersEquipment(email));
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteMyEquipmnet(Authentication authentication){
+		String email=authentication.getName(); 
+		return ResponseEntity.ok(equipmentService.deleteEquipment(email));
 	}
 	
 	

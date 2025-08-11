@@ -13,11 +13,13 @@ public interface EquipmentService {
 
 	ApiResponse addEquipment(EquipmentDto dto, String email);
 
-	List<EquipmentRespDto> getAllEquipments();
+	List<EquipmentRespDto> getAllEquipments(String email);
 
 	ApiResponse updateEquipment(Long equipmentId, @Valid EquipmentUpdateDto dto);
 
 	ApiResponse deleteEquipment(Long equipmentId);
+	
+	ApiResponse deleteEquipment(String email);
 
 	EquipmentRespDto getEquipmentById(Long equipmentId);
 

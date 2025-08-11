@@ -53,8 +53,8 @@ public class EquipmentServiceImpl implements EquipmentService {
 
 
 	@Override
-	public List<EquipmentRespDto> getAllEquipments() {
-		List<Equipment> equipments=equipmentDao.findAll();
+	public List<EquipmentRespDto> getAllEquipments(String email) {
+		List<Equipment> equipments=equipmentDao.findAllExceptOwnerEmail(email);
 		return equipments.stream()
 				.map(equipment->mapper.map(equipment,EquipmentRespDto.class ))
 				.toList();
@@ -104,6 +104,17 @@ public class EquipmentServiceImpl implements EquipmentService {
 	public List<EquipmentRespDto> getUsersEquipment(String email) {
 		
 		return equipmentDao.findOwnerEquipments(email);
+	}
+
+
+	@Override
+	public ApiResponse deleteEquipment(String email) {
+		Equipment equipment=equipmentDao.findByOwnerEmail(email).orElseThrow(()->new ApiException("Invalid user"));
+		equipment.getOwner().removeEquipment(equipment);
+		imageService.deleteImage(equipment.getCloudinaryPublicId()); 
+		equipmentDao.delete(equipment);
+		
+		return new ApiResponse("Equipmet deleted successfully");
 	}
 	
 }
