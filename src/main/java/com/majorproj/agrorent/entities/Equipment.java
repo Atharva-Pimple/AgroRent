@@ -23,17 +23,29 @@ import lombok.ToString;
 public class Equipment extends BaseEntity{
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	 @Column(length = 30, name = "equipment_name")
+	@Column(length = 30, name = "equipment_name")
     private String name;
     private String description;
     private String imageUrl;
     @Column(nullable = false)
     private double rentalPrice;
     private boolean available=true;
+//    private String type;
+    private String cloudinaryPublicId;
 
     @ManyToOne
     private Farmer owner;
 
     @OneToMany(mappedBy = "equipment")
     private List<Booking> bookings;
+    
+    public void addBooking(Booking b) {
+		this.bookings.add(b);
+		b.setEquipment(this);
+	}
+	
+	public void removeBooking(Booking b) {
+		this.bookings.remove(b);
+		b.setEquipment(null);
+	}
 }
